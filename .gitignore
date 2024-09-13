@@ -485,3 +485,4 @@ $RECYCLE.BIN/
 Skinet.API/appsettings.json
 */obj
 */bin
+.vscode
