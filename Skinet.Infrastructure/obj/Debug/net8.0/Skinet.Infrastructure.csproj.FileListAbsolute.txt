@@ -1,0 +1,15 @@
+C:\Projects\AspNetAngularCourse\skinet\Skinet.Infrastructure\bin\Debug\net8.0\Skinet.Infrastructure.deps.json
+C:\Projects\AspNetAngularCourse\skinet\Skinet.Infrastructure\bin\Debug\net8.0\Skinet.Infrastructure.dll
+C:\Projects\AspNetAngularCourse\skinet\Skinet.Infrastructure\bin\Debug\net8.0\Skinet.Infrastructure.pdb
+C:\Projects\AspNetAngularCourse\skinet\Skinet.Infrastructure\bin\Debug\net8.0\Skinet.Core.dll
+C:\Projects\AspNetAngularCourse\skinet\Skinet.Infrastructure\bin\Debug\net8.0\Skinet.Core.pdb
+C:\Projects\AspNetAngularCourse\skinet\Skinet.Infrastructure\obj\Debug\net8.0\Skinet.Infrastructure.csproj.AssemblyReference.cache
+C:\Projects\AspNetAngularCourse\skinet\Skinet.Infrastructure\obj\Debug\net8.0\Skinet.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Projects\AspNetAngularCourse\skinet\Skinet.Infrastructure\obj\Debug\net8.0\Skinet.Infrastructure.AssemblyInfoInputs.cache
+C:\Projects\AspNetAngularCourse\skinet\Skinet.Infrastructure\obj\Debug\net8.0\Skinet.Infrastructure.AssemblyInfo.cs
+C:\Projects\AspNetAngularCourse\skinet\Skinet.Infrastructure\obj\Debug\net8.0\Skinet.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Projects\AspNetAngularCourse\skinet\Skinet.Infrastructure\obj\Debug\net8.0\Skinet.I.3A3ADE70.Up2Date
+C:\Projects\AspNetAngularCourse\skinet\Skinet.Infrastructure\obj\Debug\net8.0\Skinet.Infrastructure.dll
+C:\Projects\AspNetAngularCourse\skinet\Skinet.Infrastructure\obj\Debug\net8.0\refint\Skinet.Infrastructure.dll
+C:\Projects\AspNetAngularCourse\skinet\Skinet.Infrastructure\obj\Debug\net8.0\Skinet.Infrastructure.pdb
+C:\Projects\AspNetAngularCourse\skinet\Skinet.Infrastructure\obj\Debug\net8.0\ref\Skinet.Infrastructure.dll
