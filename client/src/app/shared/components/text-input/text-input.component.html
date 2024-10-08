@@ -1,0 +1,6 @@
+<mat-form-field appearance="outline" class="w-full mb-4">
+    <mat-label>{{label}}</mat-label>
+    <input [formControl]="control" type={{type}} placeholder={{label}} matInput />
+    <mat-error *ngIf="control.hasError('required')">{{label}} is required</mat-error>
+    <mat-error *ngIf="control.hasError('email')">Email is invalid</mat-error>
+</mat-form-field>
