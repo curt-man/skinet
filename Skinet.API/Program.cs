@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Skinet.API.Middlewares;
 using Skinet.Core.Entities;
-using Skinet.Core.Intefraces;
+using Skinet.Core.Interfaces;
 using Skinet.Core.Interfaces;
 using Skinet.Infrastructure.Data;
 using Skinet.Infrastructure.Services;

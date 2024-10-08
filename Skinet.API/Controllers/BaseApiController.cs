@@ -2,7 +2,7 @@ using System;
 using Microsoft.AspNetCore.Mvc;
 using Skinet.API.RequestHelpers;
 using Skinet.Core.Entities;
-using Skinet.Core.Intefraces;
+using Skinet.Core.Interfaces;
 
 namespace Skinet.API.Controllers;
 

@@ -1,6 +1,6 @@
 using System;
 using System.Linq.Expressions;
-using Skinet.Core.Intefraces;
+using Skinet.Core.Interfaces;
 
 namespace Skinet.Core.Specifications;
 

@@ -1,7 +1,7 @@
 using System;
 using System.Linq.Expressions;
 
-namespace Skinet.Core.Intefraces;
+namespace Skinet.Core.Interfaces;
 
 public interface ISpecification<T>
 {

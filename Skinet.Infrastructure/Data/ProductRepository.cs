@@ -1,7 +1,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Skinet.Core.Entities;
-using Skinet.Core.Intefraces;
+using Skinet.Core.Interfaces;
 
 namespace Skinet.Infrastructure.Data;
 

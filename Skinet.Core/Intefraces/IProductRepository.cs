@@ -1,7 +1,7 @@
 using System;
 using Skinet.Core.Entities;
 
-namespace Skinet.Core.Intefraces;
+namespace Skinet.Core.Interfaces;
 
 public interface IProductRepository
 {
