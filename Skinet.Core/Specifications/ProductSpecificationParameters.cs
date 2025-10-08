@@ -14,8 +14,6 @@ public class ProductSpecificationParameters
         set { _pageSize = value > MAX_PAGE_SIZE ? MAX_PAGE_SIZE : value; }
     }
 
-
-
     private List<string> _brands = [];
     public List<string> Brands
     {

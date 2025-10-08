@@ -44,11 +44,6 @@ public class GenericRepository<T>(StoreContext context) : IGenericRepository<T> 
         return await query.CountAsync();
     }
 
-    public async Task<bool> SaveAllAsync()
-    {
-        return await context.SaveChangesAsync() > 0;
-    }
-
     public async Task<T?> GetEntityWithSpec(ISpecification<T> specification)
     {
         return await ApplySpecification(specification).FirstOrDefaultAsync();

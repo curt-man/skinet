@@ -4,8 +4,9 @@ using Skinet.Core.Interfaces;
 
 namespace Skinet.Core.Specifications;
 
-public class BaseSpecification<T>(Expression<Func<T, bool>>? criteria) : ISpecification<T>
+public class BaseSpecification<T>(Expression<Func<T, bool>>? criteria = null) : ISpecification<T>
 {
+    protected BaseSpecification() : this(null) {}
     public Expression<Func<T, bool>>? Criteria => criteria;
 
     public Expression<Func<T, object>>? OrderBy { get; private set; }
@@ -17,6 +18,15 @@ public class BaseSpecification<T>(Expression<Func<T, bool>>? criteria) : ISpecif
     public int Take {get; private set;}
     public int Skip {get; private set;}
     public bool IsPagingEnabled {get; private set;}
+    public object? SeekValue { get; private set; }
+    public Expression<Func<T, bool>>? SeekPredicate { get; private set; }
+
+    public List<Expression<Func<T, object>>> Includes {get; } = [];
+    public List<string> IncludeStrings {get; } = [];
+
+    int ISpecification<T>.Take => Take;
+
+    int ISpecification<T>.Skip => Skip;
 
     public IQueryable<T> ApplyCriteria(IQueryable<T> query)
     {
@@ -25,6 +35,16 @@ public class BaseSpecification<T>(Expression<Func<T, bool>>? criteria) : ISpecif
             query = query.Where(Criteria);
         }
         return query;   
+    }
+
+    protected void AddInclude(Expression<Func<T, object>> includeExpressions)
+    {
+        Includes.Add(includeExpressions);
+    }
+
+    protected void AddInclude(string includeString)
+    {
+        IncludeStrings.Add(includeString);
     }
 
     protected void AddOrderBy(Expression<Func<T, object>> orderByExpression)
@@ -42,16 +62,20 @@ public class BaseSpecification<T>(Expression<Func<T, bool>>? criteria) : ISpecif
         IsDistinct = true;
     }
 
-    protected void ApplyPaging(int skip, int take)
+    protected void ApplyPaging(int take, int skip = default, object? seekValue = null, Expression<Func<T, bool>>? seekPredicate = null)
     {
-        Skip = skip;
         Take = take;
+        Skip = skip;
+        SeekValue = seekValue;
+        SeekPredicate = seekPredicate;
         IsPagingEnabled = true;
     }
 }
 
-public class BaseSpecification<T, TResult>(Expression<Func<T, bool>>? criteria) : BaseSpecification<T>(criteria), ISpecification<T, TResult>
+public class BaseSpecification<T, TResult>(Expression<Func<T, bool>>? criteria = null) : BaseSpecification<T>(criteria), ISpecification<T, TResult>
 {
+    protected BaseSpecification() : this(null) {}
+
     public Expression<Func<T, TResult>>? Select {get; private set;}
 
     protected void AddSelect(Expression<Func<T, TResult>> selectExpression)

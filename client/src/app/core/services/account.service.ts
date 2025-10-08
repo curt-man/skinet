@@ -3,20 +3,24 @@ import { environment } from '../../../environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Address, User } from '../../shared/models/user';
 import { map, tap } from 'rxjs';
+import { SignalrService } from './signalr.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
   baseUrl = environment.apiUrl;
-  serviceUrl = this.baseUrl+'account/'
+  serviceUrl = this.baseUrl + 'account/'
   private http = inject(HttpClient);
+  private signalrService = inject(SignalrService);
   currentUser = signal<User | null>(null);
 
   login(values: any) {
     let params = new HttpParams();
     params = params.append('useCookies', true);
-    return this.http.post<User>(this.baseUrl + 'login', values, {params});
+    return this.http.post<User>(this.baseUrl + 'login', values, { params }).pipe(
+      tap(() => this.signalrService.createHubConnection())
+    );
   }
 
   register(values: any) {
@@ -33,7 +37,9 @@ export class AccountService {
   }
 
   logout() {
-    return this.http.post(this.serviceUrl + 'logout', {});
+    return this.http.post(this.serviceUrl + 'logout', {}).pipe(
+      tap(()=>this.signalrService.stopHubConnection())
+    );
   }
 
   updateAddress(address: Address) {
@@ -48,6 +54,6 @@ export class AccountService {
   }
 
   getAuthState() {
-    return this.http.get<{isAuthenticated: boolean}>(this.serviceUrl + 'auth-status');
+    return this.http.get<{ isAuthenticated: boolean }>(this.serviceUrl + 'auth-status');
   }
 }

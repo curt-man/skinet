@@ -1,6 +1,6 @@
 services:
   sql:
-    image: mcr.microsoft.com/azure-sql-edge
+    image: mcr.microsoft.com/mssql/server:2022-latest
     environment:
       ACCEPT_EULA: "1"
       MSSQL_SA_PASSWORD: "Password@1"
@@ -14,6 +14,14 @@ services:
       - "6379:6379"
     volumes:
       - redis-data:/data
+  seq:
+    image: datalust/seq:latest
+    environment:
+      ACCEPT_EULA: "Y"
+      SEQ_PASSWORD: "Password@1"
+    ports:
+      - "5341:80"
+    restart: unless-stopped
 
 volumes:
   redis-data:

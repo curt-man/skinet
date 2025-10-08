@@ -1,4 +1,5 @@
 using System;
+using Microsoft.EntityFrameworkCore;
 using Skinet.Core.Entities;
 using Skinet.Core.Interfaces;
 
@@ -8,29 +9,39 @@ public class SpecificationEvaluator<T> where T : BaseEntity
 {
     public static IQueryable<T> GetQuery(IQueryable<T> query, ISpecification<T> specification)
     {
-        if(specification.Criteria != null)
+        if (specification.Criteria != null)
         {
             query = query.Where(specification.Criteria);
         }
 
-        if(specification.OrderBy != null)
+        if (specification.OrderBy != null)
         {
             query = query.OrderBy(specification.OrderBy);
         }
-        else if(specification.OrderByDescending != null)
+        else if (specification.OrderByDescending != null)
         {
             query = query.OrderByDescending(specification.OrderByDescending);
         }
-        
-        if(specification.IsDistinct)
+
+        if (specification.IsDistinct)
         {
             query = query.Distinct();
         }
 
-        if(specification.IsPagingEnabled)
+        // Keyset (seek) pagination
+        if (specification.SeekPredicate != null && specification.SeekValue != null)
+        {
+            query = query.Where(specification.SeekPredicate);
+            query = query.Take(specification.Take);
+        }
+        // Offset-based pagination
+        else if (specification.IsPagingEnabled)
         {
             query = query.Skip(specification.Skip).Take(specification.Take);
         }
+
+        query = specification.Includes.Aggregate(query, (current, include) => current.Include(include));
+        query = specification.IncludeStrings.Aggregate(query, (current, include) => current.Include(include));
 
         return query;
     }

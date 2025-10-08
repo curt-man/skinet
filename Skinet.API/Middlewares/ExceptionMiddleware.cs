@@ -5,7 +5,7 @@ using Skinet.API.Errors;
 
 namespace Skinet.API.Middlewares;
 
-public class ExceptionMiddleware(IHostEnvironment environment, RequestDelegate next)
+public class ExceptionMiddleware(IHostEnvironment environment, RequestDelegate next, ILogger<ExceptionMiddleware> logger)
 {
     public async Task InvokeAsync(HttpContext context)
     {
@@ -21,6 +21,8 @@ public class ExceptionMiddleware(IHostEnvironment environment, RequestDelegate n
 
     private Task HandleExceptionAsync(HttpContext context, Exception ex, IHostEnvironment environment)
     {
+        logger.LogError(ex, ex.Message);
+
         context.Response.ContentType = "application/json";
         context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
         

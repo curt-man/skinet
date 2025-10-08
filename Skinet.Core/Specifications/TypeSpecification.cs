@@ -4,9 +4,9 @@ using Skinet.Core.Entities;
 
 namespace Skinet.Core.Specifications;
 
-public class TypeSpecification(Expression<Func<Product, bool>>? criteria) : BaseSpecification<Product, string>(criteria)
+public class TypeSpecification : BaseSpecification<Product, string>
 {
-    public TypeSpecification() : this(null)
+    public TypeSpecification() : base(null)
     {
         AddSelect(p=>p.Type);
         ApplyDistinct();

@@ -8,20 +8,20 @@ using Skinet.Infrastructure.Data;
 
 namespace Skinet.API.Controllers;
 
-public class ProductsController(IGenericRepository<Product> productRepository) : BaseApiController
+public class ProductsController(IUnitOfWork uow) : BaseApiController
 {
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Product>>> GetProducts([FromQuery] ProductSpecificationParameters parameters)
     {
         var specification = new ProductSpecification(parameters);
 
-        return await CreatePagedResult(productRepository, specification, parameters.PageIndex, parameters.PageSize);
+        return await CreatePagedResult(uow.Repository<Product>(), specification, parameters.PageIndex, parameters.PageSize);
     }
 
     [HttpGet("{id:int}")]
     public async Task<ActionResult<Product>> GetProduct(int id)
     {
-        var product = await productRepository.GetByIdAsync(id);
+        var product = await uow.Repository<Product>().GetByIdAsync(id);
         if (product == null)
         {
             return NotFound();
@@ -32,8 +32,8 @@ public class ProductsController(IGenericRepository<Product> productRepository) :
     [HttpPost]
     public async Task<ActionResult<Product>> CreateProduct(Product product)
     {
-        productRepository.Add(product);
-        if (await productRepository.SaveAllAsync())
+        uow.Repository<Product>().Add(product);
+        if (await uow.Complete())
         {
             return CreatedAtAction(nameof(GetProduct), new { id = product.Id }, product);
         }
@@ -49,8 +49,8 @@ public class ProductsController(IGenericRepository<Product> productRepository) :
             return BadRequest("Cannot Update this product");
         }
 
-        productRepository.Update(product);
-        if (await productRepository.SaveAllAsync())
+        uow.Repository<Product>().Update(product);
+        if (await uow.Complete())
         {
             return NoContent();
         }
@@ -60,14 +60,14 @@ public class ProductsController(IGenericRepository<Product> productRepository) :
     [HttpDelete("{id:int}")]
     public async Task<ActionResult> DeleteProduct(int id)
     {
-        var product = await productRepository.GetByIdAsync(id);
+        var product = await uow.Repository<Product>().GetByIdAsync(id);
         if (product == null)
         {
             return NotFound();
         }
-        productRepository.Remove(product);
+        uow.Repository<Product>().Remove(product);
 
-        if (await productRepository.SaveAllAsync())
+        if (await uow.Complete())
         {
             return NoContent();
         }
@@ -79,7 +79,7 @@ public class ProductsController(IGenericRepository<Product> productRepository) :
     public async Task<ActionResult<IEnumerable<string>>> GetBrands()
     {
         var specification = new BrandSpecification();
-        var brands = await productRepository.ListAsync<string>(specification);
+        var brands = await uow.Repository<Product>().ListAsync<string>(specification);
         return Ok(brands);
     }
 
@@ -87,12 +87,12 @@ public class ProductsController(IGenericRepository<Product> productRepository) :
     public async Task<ActionResult<IEnumerable<string>>> GetTypes()
     {
         var specification = new TypeSpecification();
-        var types = await productRepository.ListAsync<string>(specification);
+        var types = await uow.Repository<Product>().ListAsync<string>(specification);
         return Ok(types);
     }
 
     private bool ProductExists(int id)
     {
-        return productRepository.Exists(id);
+        return uow.Repository<Product>().Exists(id);
     }
 }

@@ -4,14 +4,15 @@ using Skinet.Core.Entities;
 
 namespace Skinet.Core.Specifications;
 
-public class ProductSpecification(Expression<Func<Product, bool>>? criteria) : BaseSpecification<Product>(criteria)
+public class ProductSpecification : BaseSpecification<Product>
 {
-    public ProductSpecification(ProductSpecificationParameters parameters) : this(p =>
+    public ProductSpecification(ProductSpecificationParameters parameters) : base(p =>
         (string.IsNullOrWhiteSpace(parameters.Search) || p.Name.ToLower().Contains(parameters.Search)) &&
         (!parameters.Brands.Any() || parameters.Brands.Contains(p.Brand)) &&
         (!parameters.Types.Any() || parameters.Types.Contains(p.Type)))
     {
-        ApplyPaging(parameters.PageSize * (parameters.PageIndex - 1), parameters.PageSize);
+        // ApplyPaging(parameters.PageSize, seekValue: );
+        ApplyPaging(parameters.PageSize, parameters.PageSize * (parameters.PageIndex - 1));
 
         switch (parameters.Sort)
         {
