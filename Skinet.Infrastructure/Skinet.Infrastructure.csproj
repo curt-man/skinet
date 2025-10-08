@@ -11,7 +11,7 @@
     <PackageReference Include="Microsoft.Extensions.Logging.AzureAppServices" Version="8.0.20" />
     <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.11.1" />
     <PackageReference Include="StackExchange.Redis" Version="2.8.16" />
-    <PackageReference Include="Stripe.net" Version="46.1.0" />
+    <PackageReference Include="Stripe.net" Version="49.0.0" />
   </ItemGroup>
 
   <PropertyGroup>
