@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging.AzureAppServices;
 using OpenTelemetry.Exporter;
 using OpenTelemetry.Logs;
 using Skinet.API.Middlewares;
@@ -23,6 +24,8 @@ builder.Logging.AddOpenTelemetry(x=>
         a.Headers = "X-Seq-ApiKey=E2QY706I4Ug3LdE4K0ba";
     });
 });
+builder.Logging.AddConsole();
+builder.Logging.AddAzureWebAppDiagnostics();
 
 builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection(nameof(StripeSettings)));
 
